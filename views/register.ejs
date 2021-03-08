@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"
+    />
+  </head>
+  <body>
+    <% var link = "dalm" %>
+    <form action="/register" method="POST">
+      <label for="id">Reg No</label>
+      <input type="text" name="id" id="" />
+      <br />
+      <br />
+      <label for="firstname">First Name</label>
+      <input type="text" name="first_name" id="" />
+      <br />
+      <br />
+      <label for="secondname">Second Name</label>
+      <input type="text" name="second_name" id="" />
+      <br />
+      <br />
+      <label for="icode" class="col-md-2"> Mobile Number</label>
+      <input type="number" name="mobile_number" />
+      <br />
+      <br />
+      <label class="file-upload-container" for="file-upload">
+        <br />
+        <br />
+        <input type="file" id="file-upload" style="padding: 1em" />
+        Select an Image
+      </label>
+      <br />
+      <br />
+      <label class="file-upload-container" for="file-upload2">
+        <br />
+        <input type="file" id="file-upload2" />
+        Select an Image
+      </label>
+      <br />
+      <br /><br />
+      <input type="text" value="<%=link%>"" name="image1" id="link" /> <input
+      type="text" value="<%=link%>"" name="image2" id="link2" />
+      <br />
+      <br />
+      <label for="" class="col-md-2">Email</label>
+      <input type="text" name="email" />
+      <br />
+      <br />
+      <label for="" class="col-md-2">Password</label>
+      <input type="text" name="password" />
+      <br />
+      <input type="submit" name="" id="submit" />
+    </form>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      var CLOUDINARY_URL = "	https://api.cloudinary.com/v1_1/dtqbz55su/upload";
+      var CLOUDINARY_UPLOAD_PRESET = "npmhvady";
+
+      var imgPreview = document.getElementById("img-preview");
+      var fileupload = document.getElementById("file-upload");
+      var fileupload2 = document.getElementById("file-upload2");
+      var submit = document.getElementById("submit");
+      var linked = document.getElementById("link");
+      var link2 = document.getElementById("link2");
+
+      fileupload.addEventListener("change", function (event) {
+        var file = event.target.files[0];
+        var formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+        axios({
+          url: CLOUDINARY_URL,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          data: formData,
+        })
+          .then(function (res) {
+            console.log(res.data.secure_url);
+            linked.value = res.data.secure_url;
+          })
+          .catch(function (err) {
+            console.log(err);
+          });
+      });
+      fileupload2.addEventListener("change", function (event) {
+        var file = event.target.files[0];
+        var formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+        axios({
+          url: CLOUDINARY_URL,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          data: formData,
+        })
+          .then(function (res) {
+            console.log(res.data.secure_url);
+            link2.value = res.data.secure_url;
+          })
+          .catch(function (err) {
+            console.log(err);
+          });
+      });
+    </script>
+  </body>
+</html>

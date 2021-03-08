@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Welcome <%=userFirstName %> <%=userLastName%></h1>
+  </body>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/speechkitt.min.js"></script>
+  <script>
+    document.querySelector("body").addEventListener("keypress", myKeyPress);
+
+    function myKeyPress(e) {
+      var keynum;
+
+      if (window.event) {
+        // IE
+        keynum = e.keyCode;
+      } else if (e.which) {
+        // Netscape/Firefox/Opera
+        keynum = e.which;
+      }
+
+      if (keynum == 102) {
+        if (annyang) {
+          // Let's define a command.
+          const commands = {
+            pdf: () => {
+              window.open("/pdf", "_self");
+            },
+            notes: () => {
+              window.open("/notes", "_self");
+            },
+            "read a book": () => {
+              window.open("/pdfToText", "_self");
+            },
+          };
+
+          //   Add our commands to annyang
+          annyang.addCommands(commands);
+
+          // Start listening.
+          annyang.start();
+          SpeechKITT.annyang();
+
+          // Define a stylesheet for KITT to use
+          SpeechKITT.setStylesheet(
+            "//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/themes/flat.css"
+          );
+
+          // Render KITT's interface
+          SpeechKITT.vroom();
+        }
+      }
+    }
+  </script>
+</html>

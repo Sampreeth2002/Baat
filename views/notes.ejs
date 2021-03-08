@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Voice Controlled Notes App</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shoelace-css/1.0.0-beta16/shoelace.css">
+        <link rel="stylesheet" href="../public/css/style.css">
+
+    </head>
+    <body>
+        <div class="container">
+
+            <h1>Voice Controlled Notes App</h1>
+            <p class="page-description">A tiny app that allows you to take notes by recording your voice</p>
+            <!-- <p><a class="tz-link" href="https://tutorialzine.com/2017/08/converting-from-speech-to-text-with-javascript">Read the full article on Tutorialzine »</a></p>
+
+            <h3 class="no-browser-support">Sorry, Your Browser Doesn't Support the Web Speech API. Try Opening This Demo In Google Chrome.</h3> -->
+
+            <div class="app"> 
+                <h3>Add New Note</h3>
+                <div class="input-single">
+                    <textarea id="note-textarea" placeholder="Create a new note by typing or using voice recognition." rows="6"></textarea>
+                </div>         
+                <button id="start-record-btn" title="Start Recording" class="startRecording">Start Recognition</button>
+                <button id="pause-record-btn" title="Pause Recording" class="pauseRecording">Pause Recognition</button>
+                <button id="save-note-btn" title="Save Note" class="stopRecording">Save Note</button>   
+                <p id="recording-instructions">Press the <strong>Start Recognition</strong> button and allow access.</p>
+                <form action="/speechToText" method="POST">
+                  <input type="text" name="user_id" class="user_id">
+                  <textarea name="speech" id="" cols="30" rows="10" class="textOfSpeech">
+                    
+                  </textarea>
+                  <input type="submit" class="conformSave">
+                </form>
+                
+                <h3>My Notes</h3>
+                <ul id="notes">
+                    <li>
+                        <p class="no-notes">You don't have any notes.</p>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+        
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/speechkitt.min.js"></script>
+        <script>
+          document.querySelector("body").addEventListener("keypress", myKeyPress);
+
+    function myKeyPress(e) {
+      var keynum;
+
+      if (window.event) {
+        // IE
+        keynum = e.keyCode;
+      } else if (e.which) {
+        // Netscape/Firefox/Opera
+        keynum = e.which;
+      }
+
+      if (keynum == 102) {
+        if (annyang) {
+          // Let's define a command.
+          const commands = {
+            "go to pdf": () => {
+              window.open("/pdf", "_self");
+            },
+            "go to notes": () => {
+              window.open("/notes", "_self");
+            },
+            "start *recording":() => {
+              
+              document.querySelector(".startRecording").click();
+              console.log("start");
+              annyang.abort();
+              SpeechKITT.annyang();
+            },
+            "stop *recording":() =>{
+              document.querySelector(".stopRecording").click();
+              console.log("stop");
+              annyang.abort();
+              SpeechKITT.annyang();
+            },
+            "save *recording":() =>{
+              document.querySelector(".conformSave").click();
+              console.log("save");
+              annyang.abort();
+              SpeechKITT.annyang();
+            },
+            "logout *page":() =>
+            {
+              window.open("/logout", "_self");
+            },
+            "go to home page":() =>
+            {
+              window.open("/landing", "_self");
+            },
+            "read a book": () => {
+              window.open("/pdfToText", "_self");
+            },
+          };
+
+          //   Add our commands to annyang
+          annyang.addCommands(commands);
+
+          // Start listening.
+          annyang.start();
+          SpeechKITT.annyang();
+
+          // Define a stylesheet for KITT to use
+          SpeechKITT.setStylesheet(
+            "//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/themes/flat.css"
+          );
+
+          // Render KITT's interface
+          SpeechKITT.vroom();
+        }
+      }
+    }
+            var user_id = "<%= user_id %>"
+            var results = <%-JSON.stringify(result) %>
+
+            try {
+  var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var recognition = new SpeechRecognition();
+}
+catch(e) {
+  console.error(e);
+  $('.no-browser-support').show();
+  $('.app').hide();
+}
+
+
+var noteTextarea = $('#note-textarea');
+var instructions = $('#recording-instructions');
+var notesList = $('ul#notes');
+
+var noteContent = '';
+
+// Get all notes from previous sessions and display them.
+var notes = getAllNotes();
+renderNotes(notes);
+
+
+
+/*-----------------------------
+      Voice Recognition 
+------------------------------*/
+
+// If false, the recording will stop after a few seconds of silence.
+// When true, the silence period is longer (about 15 seconds),
+// allowing us to keep recording even when the user pauses. 
+recognition.continuous = true;
+
+// This block is called every time the Speech APi captures a line. 
+recognition.onresult = function(event) {
+
+  // event is a SpeechRecognitionEvent object.
+  // It holds all the lines we have captured so far. 
+  // We only need the current one.
+  var current = event.resultIndex;
+
+  // Get a transcript of what was said.
+  var transcript = event.results[current][0].transcript;
+
+  
+
+  // Add the current transcript to the contents of our Note.
+  // There is a weird bug on mobile, where everything is repeated twice.
+  // There is no official solution so far so we have to handle an edge case.
+  var mobileRepeatBug = (current == 1 && transcript == event.results[0][0].transcript);
+
+  if(!mobileRepeatBug) {
+    noteContent += transcript;
+    noteTextarea.val(noteContent);
+  }
+};
+
+recognition.onstart = function() { 
+  instructions.text('Voice recognition activated. Try speaking into the microphone.');
+}
+
+recognition.onspeechend = function() {
+  instructions.text('You were quiet for a while so voice recognition turned itself off.');
+}
+
+recognition.onerror = function(event) {
+  if(event.error == 'no-speech') {
+    instructions.text('No speech was detected. Try again.');  
+  };
+}
+
+
+
+/*-----------------------------
+      App buttons and input 
+------------------------------*/
+
+$('#start-record-btn').on('click', function(e) {
+  if (noteContent.length) {
+    noteContent += ' ';
+  }
+  recognition.start();
+});
+
+
+$('#pause-record-btn').on('click', function(e) {
+  recognition.stop();
+  instructions.text('Voice recognition paused.');
+});
+
+// Sync the text inside the text area with the noteContent variable.
+noteTextarea.on('input', function() {
+  noteContent = $(this).val();
+})
+
+$('#save-note-btn').on('click', function(e) {
+  recognition.stop();
+
+  if(!noteContent.length) {
+    instructions.text('Could not save empty note. Please add a message to your note.');
+  }
+  else {
+    // Save note to localStorage.
+    // The key is the dateTime with seconds, the value is the content of the note.
+    saveNote(new Date().toLocaleString(), noteContent);
+    console.log(noteContent);
+    document.querySelector(".user_id").value=user_id;
+    document.querySelector(".textOfSpeech").value=noteContent;
+
+
+    // // Reset variables and update UI.
+    noteContent = '';
+    renderNotes(getAllNotes());
+    noteTextarea.val('');
+    instructions.text('Note saved successfully.');
+  }
+      
+})
+
+
+notesList.on('click', function(e) {
+  e.preventDefault();
+  var target = $(e.target);
+
+  // Listen to the selected note.
+  if(target.hasClass('listen-note')) {
+    var content = target.closest('.note').find('.content').text();
+    readOutLoud("date");
+  }
+
+  // Delete note.
+  if(target.hasClass('delete-note')) {
+    var dateTime = target.siblings('.date').text();  
+    deleteNote(dateTime);
+    target.closest('.note').remove();
+  }
+});
+
+
+
+/*-----------------------------
+      Speech Synthesis 
+------------------------------*/
+
+function readOutLoud(message) {
+	var speech = new SpeechSynthesisUtterance();
+
+  // Set the text and voice attributes.
+	speech.text = message;
+	speech.volume = 1;
+	speech.rate = 1;
+	speech.pitch = 1;
+  
+	window.speechSynthesis.speak(speech);
+}
+
+
+
+/*-----------------------------
+      Helper Functions 
+------------------------------*/
+
+var count = 0;
+
+function renderNotes(notes) {
+  var html = '';
+  if(notes.length) {
+    notes.forEach(function(note,index) {
+      if(note.id==user_id){
+        count++;
+      html+= `<li class="note">
+        <p class="header">
+          <span class="date">${note.date}</span>
+          <a href="#" class="listen-note a-${index}" title="Listen to Note " >Listen to Note</a>
+          <a href="#" class="delete-note" title="Delete">Delete</a>
+        </p>
+        <p class="content b-${index}">${note.content}</p>
+      </li>`; 
+    }
+    });
+
+    if(count==0)
+    {
+      html+="You don't have any notes!"
+    }
+  }
+  else {
+    html = '<li><p class="content">You don\'t have any notes yet.</p></li>';
+  }
+  notesList.html(html);
+}
+
+var ele = document.querySelectorAll(".listen-note");
+
+for(var i=0;i<ele.length;i++)
+{
+ 
+    document.querySelector(".a-"+i).addEventListener("click",((i)=>function(){
+      
+      var text_input = document.querySelector(".b-"+i).innerText;
+      var msg = new SpeechSynthesisUtterance();
+msg.text = text_input;
+window.speechSynthesis.speak(msg);
+      // console.log(i)
+    })(i))
+}    
+
+
+function saveNote(dateTime, content) {
+  localStorage.setItem('note-' + dateTime, content);
+}
+
+
+function getAllNotes() {
+  var notes = [];
+  // var key;
+  // for (var i = 0; i < localStorage.length; i++) {
+  //   key = localStorage.key(i);
+  //   // console.log(i)
+  //   console.log(key)
+
+  //   if(key.substring(0,5) == 'note-') {
+  //     notes.push({
+  //       date: key.replace('note-',''),
+  //       content: localStorage.getItem(localStorage.key(i)),
+  //     },
+  //     );
+  //   } 
+  // }
+
+  results.forEach((result)=>
+  {
+    notes.push({
+      date: result.date,
+      content:result.notes,
+      id:result.id
+    })
+  })
+ 
+  return notes;
+}
+console.log(results)
+
+//203-252
+
+function deleteNote(dateTime) {
+  localStorage.removeItem('note-' + dateTime); 
+}
+        </script>
+
+        
+
+    </body>
+</html>

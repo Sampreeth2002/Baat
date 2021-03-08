@@ -1,0 +1,130 @@
+<!doctype html>
+	<head>
+		<style>
+			/* CSS comes here */
+			body {
+			    font-family:arial;
+			}
+			input {
+			    padding: 10px;
+			    width: 300px;
+			    border-radius: 5px;
+			    border: solid 2px #BBB;
+			}
+			div {
+			    margin:10px 0px;
+			}
+			button {
+			    padding:10px;
+			    background-color:#6a67ce;
+			    color: #FFFFFF;
+			    border: 0px;
+			    cursor:pointer;
+			    border-radius: 5px;
+			}
+		</style>
+		<title>Pure JavaScript Text to Audio</title>
+	</head>
+	<body>
+	    <h2>JavaScript Text to Speech</h2>
+		<div><input type="text" id="text-to-speech" placeholder="Enter text to speak..." value="<%=pdfData%>"/></div>
+        <div><button type="button" class="start" onclick="textToAudio()">Speak</button></div>
+		<div><button type="button" class="pause" onclick="pauseAudio()">Pause</button></div>
+        <br/>
+		<div><button type="button" class="resume" onclick="resumeAudio()">Resume</button></div>
+		<div><button type="button" class="stop" onclick="stopAudio()">Stop</button></div>
+        <br/>
+        
+        
+		<script>
+			/* JS comes here */
+            function textToAudio() {
+                let msg = document.getElementById("text-to-speech").value;
+                
+                let speech = new SpeechSynthesisUtterance();
+                speech.lang = "en-US";
+                
+                speech.text = msg;
+                speech.volume = 1;
+                speech.rate = 1;
+                speech.pitch = 1;
+                
+                window.speechSynthesis.speak(speech);
+            }
+
+			function stopAudio()
+			{
+				window.speechSynthesis.cancel();
+			}
+
+			function pauseAudio()
+			{
+				window.speechSynthesis.pause();
+			}
+
+			function resumeAudio()
+			{
+				window.speechSynthesis.resume();
+			}
+            
+		</script>
+	</body>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/speechkitt.min.js"></script>
+  <script>
+    document.querySelector("body").addEventListener("keypress", myKeyPress);
+
+    function myKeyPress(e) {
+      var keynum;
+
+      if (window.event) {
+        // IE
+        keynum = e.keyCode;
+      } else if (e.which) {
+        // Netscape/Firefox/Opera
+        keynum = e.which;
+      }
+
+      if (keynum == 102) {
+        if (annyang) {
+          // Let's define a command.
+          const commands = {
+            pdf: () => {
+              window.open("/pdf", "_self");
+            },
+            "notes ": () => {
+              window.open("/notes", "_self");
+            },
+            "start *reading":() =>{
+				document.querySelector(".start").click();
+			},
+			"stop *reading":()=>{
+				document.querySelector(".pause").click();
+			},
+			"resume *reading":()=>{
+				document.querySelector(".resume").click();
+			},
+			"start over *reading":()=>{
+				document.querySelector(".stop").click();
+			}
+          };
+
+          //   Add our commands to annyang
+          annyang.addCommands(commands);
+
+          // Start listening.
+          annyang.start();
+          SpeechKITT.annyang();
+
+          // Define a stylesheet for KITT to use
+          SpeechKITT.setStylesheet(
+            "//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/themes/flat.css"
+          );
+
+          // Render KITT's interface
+          SpeechKITT.vroom();
+        }
+      }
+    }
+  </script>
+</html>

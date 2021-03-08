@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p>Login with Face recognisation</p>
+    <a href="/upload">Click Here</a>
+    <p>Login with email and password</p>
+    <a href="/login">Click Here</a>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/speechkitt.min.js"></script>
+  <script>
+    document.querySelector("body").addEventListener("keypress", myKeyPress);
+
+    function myKeyPress(e) {
+      var keynum;
+
+      if (window.event) {
+        // IE
+        keynum = e.keyCode;
+      } else if (e.which) {
+        // Netscape/Firefox/Opera
+        keynum = e.which;
+      }
+
+      if (keynum == 102) {
+        if (annyang) {
+          // Let's define a command.
+          const commands = {
+            "face *login": () => {
+              window.open("/upload", "_self");
+            },
+            "email *login": () => {
+              window.open("/login", "_self");
+            },
+          };
+
+          //   Add our commands to annyang
+          annyang.addCommands(commands);
+
+          // Start listening.
+          annyang.start();
+          SpeechKITT.annyang();
+
+          // Define a stylesheet for KITT to use
+          SpeechKITT.setStylesheet(
+            "//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/themes/flat.css"
+          );
+
+          // Render KITT's interface
+          SpeechKITT.vroom();
+        }
+      }
+    }
+  </script>
+</html>

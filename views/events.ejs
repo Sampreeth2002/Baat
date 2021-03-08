@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events</title>
+  </head>
+  <body>
+    <h1>This is events page</h1>
+    <% results.forEach(function(result,index){ %> <% if(result.dateTimeEnding <
+    new Date()){%>
+    <h2><%= index %> - <%=result.name%></h2>
+    <p><%=result.eventDescription%></p>
+    <h3><%=result.duration%></h3>
+    <img src="<%=result.image%>" alt="" />
+    <h3>Starting Time : <%=result.dateTime.toLocaleTimeString("en-US") %></h3>
+    <h3>
+      Ending Time : <%=result.dateTimeEnding.toLocaleTimeString("en-US") %>
+    </h3>
+    <a href="<%=result.eventLink %>">Event Link</a>
+    <% } %> <% }) %>
+  </body>
+</html>
