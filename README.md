@@ -10,3 +10,6 @@ https://www.figma.com/file/izgrvGO77YhoMJqQYDEqIu/Baat?node-id=6%3A2
 
 *YouTube*
 https://www.youtube.com/watch?v=OtEFg4EKAEM
+
+*PPT*
+https://vitacin-my.sharepoint.com/:p:/g/personal/sampreethm_2019_vitstudent_ac_in/EVbeLguJep5Kr5LUsZEo6ekB2aUaQLLh6OCGKOnAfC630A?e=3D0qDv
