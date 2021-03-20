@@ -47,7 +47,7 @@
     
 
     <div class="contentarea">
-      <h1>Using Javascript to capture Photo</h1>
+      <h1>Face Recognisation authetication</h1>
       <div class="camera">
         <video id="video">Video stream not available.</video>
       </div>
@@ -58,15 +58,17 @@
     </div>
 
     <form action="/auth" method="POST" >
-    <input type="text" name="authenticated" id="authenticated" >
-    <input type="text" name="user_id" id="user_id">
-    <input type="submit" class="conformUser">
+    <input style="display: none;" type="text" name="authenticated" id="authenticated" >
+    <input  style="display: none;" type="text" name="user_id" id="user_id">
+    <input style="display: none;" type="submit" id="sun" class="conformUser">
     </form>
     
 
     <button id="submitted" class="conform">Submit</button>
 
     <script>
+      
+
       /* JS comes here */
       (function () {
         var width = 320; // We will scale the photo width to this

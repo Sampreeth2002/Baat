@@ -311,6 +311,7 @@ app.post("/adminLogin", (req, res) => {
   // console.log(email, password);
   var insertQuery = `select * from admin where email = ? and password = ?`;
   var query = mysql.format(insertQuery, [email, password]);
+  console.log(query);
   con.query(query, function (err, result) {
     if (err) throw err;
     else if (result != "") {
@@ -419,13 +420,116 @@ io.on("connection", (socket) => {
   });
 });
 
-// NEWLY ADDED
 app.get("/get_messages", function (req, result) {
   con.query("SELECT * FROM messages", function (err, messages) {
     result.end(JSON.stringify(messages));
   });
 });
-// NEWLY ADDED
+
+//Student-Teacher connection
+
+app.get("/study", function (req, res) {
+  // var insertQuery = `SELECT * FROM teacher_student INNER JOIN teacher_uploads ON teacher_uploads.teacher_id=teacher_student.teacher_id and teacher_student.id = '${user_id}'`;
+  var insertQuery = `SELECT * FROM teacher_student INNER JOIN teacher_uploads ON teacher_uploads.teacher_id=teacher_student.teacher_id and teacher_student.id = 'Sampreeth'`;
+  console.log(insertQuery);
+  con.query(insertQuery, function (err, result) {
+    if (err) throw err;
+    res.send(result);
+  });
+});
+
+//Ed-Tech
+
+var teacherFirstname = "";
+var teacherLastname = "";
+var teacher_id = "";
+var teacherSubject = "";
+var teacherAuthentication = false;
+var teacherResult = "";
+
+app.get("/teacherLogin", function (req, res) {
+  res.render("teacherLogin");
+});
+
+app.post("/teacherLogin", function (req, res) {
+  var email = req.body.email;
+  var password = req.body.password;
+  var insertQuery = `select * from teacher where email = ? and password = ?`;
+  var query = mysql.format(insertQuery, [email, password]);
+  console.log(query);
+  con.query(query, function (err, result) {
+    if (err) throw err;
+    else if (result != "") {
+      res.render("teacherLanding", {
+        result: result,
+      });
+      teacherResult = result;
+      teacherAuthentication = true;
+      teacherFirstname = result[0].first_name;
+      teacher_id = result[0].teacher_id;
+      teacherLastname = result[0].last_name;
+      teacherSubject = result[0].subject;
+      console.log(result);
+    } else {
+      res.redirect("/teacherLogin");
+    }
+  });
+});
+
+app.get("/teacherLanding", function (req, res) {
+  res.render("teacherLanding", {
+    result: teacherResult,
+  });
+});
+
+app.get("/teacherLogout", function (req, res) {
+  if (teacherAuthentication == true) {
+    teacherAuthentication = false;
+    teacherFirstname = "";
+    teacherLastname = "";
+    teacherSubject = "";
+    res.redirect("/teacherLogin");
+  } else {
+    res.render("teacherLogin");
+  }
+});
+
+//Teacher Upload
+
+app.get("/teacherUpload", function (req, res) {
+  // var insertQuery = `select * from teacher_uploads where teacher_id = ${teacher_id}`;
+  var insertQuery = `select * from teacher_uploads where teacher_id = 2`;
+  con.query(insertQuery, function (err, result) {
+    if (err) throw err;
+    res.render("teacherUpload", {
+      teacher_id: teacher_id,
+      teacherSubject: teacherSubject,
+      result: result,
+    });
+    console.log(result);
+  });
+});
+
+app.post("/teacherUpload", function (req, res) {
+  var teacherUpload = req.body.upload;
+  var teacher_id = req.body.teacher_id;
+  var subject = req.body.subject;
+  var query =
+    "insert into teacher_uploads (teacher_id,upload,subject) values(?,?,?)";
+  var insertQuery = mysql.format(query, [teacher_id, teacherUpload, subject]);
+  con.query(insertQuery, function (err, result) {
+    if (err) throw err;
+    res.redirect("/teacherUpload");
+  });
+});
+
+// Teacher Upload Delete
+
+app.post("/teacherUploadDelete", function (req, res) {
+  var upload_id = req.body.upload_id;
+  var query = `delete from teacher_uploads where upload_id = ${upload_id}`;
+  con.query;
+});
 
 const PORT = process.env.PORT || 3000;
 

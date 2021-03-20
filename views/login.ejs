@@ -5,6 +5,221 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      .bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -10;
+      }
+      #e24_3 {
+        overflow: hidden;
+        width: 1440px;
+        height: 1024px;
+        position: absolute;
+        background-image: url(./css/elogin_pass.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      #e28_75 {
+        width: 1440px;
+        height: 1024px;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+      }
+      #e28_76 {
+        background-color: rgba(
+          210.37499696016312,
+          210.37499696016312,
+          210.37499696016312,
+          0.3700000047683716
+        );
+        width: 769px;
+        height: 443px;
+        position: absolute;
+        left: 336px;
+        top: 313px;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+        border-bottom-left-radius: 50px;
+        border-bottom-right-radius: 50px;
+      }
+      #e28_86 {
+        color: rgba(0, 0, 0, 1);
+        width: 182px;
+        height: 39px;
+        position: absolute;
+        left: 387px;
+        top: 483px;
+        font-family: Poppins;
+        text-align: right;
+        font-size: 24px;
+        letter-spacing: 8;
+      }
+      #e28_87 {
+        color: rgba(0, 0, 0, 1);
+        width: 182px;
+        height: 39px;
+        position: absolute;
+        left: 387px;
+        top: 540px;
+        font-family: Poppins;
+        text-align: right;
+        font-size: 24px;
+        letter-spacing: 8;
+      }
+      #e28_77 {
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        background-color: rgba(0, 0, 0, 1);
+        border: 3px solid rgba(255, 255, 255, 1);
+        width: 1054px;
+        height: 78px;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+      }
+      #e28_78 {
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        background-color: rgba(0, 0, 0, 1);
+        border: 3px solid rgba(255, 255, 255, 1);
+        width: 129px;
+        height: 78px;
+        position: absolute;
+        left: 1053px;
+        top: 0px;
+      }
+      #e28_79 {
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        background-color: rgba(0, 0, 0, 1);
+        border: 3px solid rgba(255, 255, 255, 1);
+        width: 129px;
+        height: 78px;
+        position: absolute;
+        left: 1182px;
+        top: 0px;
+      }
+      #e28_80 {
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        background-color: rgba(0, 0, 0, 1);
+        border: 3px solid rgba(255, 255, 255, 1);
+        width: 129px;
+        height: 78px;
+        position: absolute;
+        left: 1311px;
+        top: 0px;
+      }
+      #e28_81 {
+        color: rgba(255, 255, 255, 1);
+        width: 54px;
+        height: 27px;
+        position: absolute;
+        left: 1091px;
+        top: 25px;
+        font-family: Poppins;
+        text-align: left;
+        font-size: 18px;
+        letter-spacing: 0;
+      }
+      #e28_82 {
+        color: rgba(255, 255, 255, 1);
+        width: 48px;
+        height: 27px;
+        position: absolute;
+        left: 1219px;
+        top: 25px;
+        font-family: Poppins;
+        text-align: left;
+        font-size: 18px;
+        letter-spacing: 0;
+      }
+      #e28_83 {
+        color: rgba(255, 255, 255, 1);
+        width: 63px;
+        height: 27px;
+        position: absolute;
+        left: 1347px;
+        top: 25px;
+        font-family: Poppins;
+        text-align: left;
+        font-size: 18px;
+        letter-spacing: 0;
+      }
+      #e28_84 {
+        color: rgba(255, 255, 255, 1);
+        width: 60px;
+        height: 36px;
+        position: absolute;
+        left: 59px;
+        top: 21px;
+        font-family: Poppins;
+        text-align: left;
+        font-size: 24px;
+        letter-spacing: 0;
+      }
+      #e28_85 {
+        background-color: rgba(255, 255, 255, 1);
+        width: 366px;
+        height: 48px;
+        position: absolute;
+        left: 610px;
+        top: 479px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+      #e28_89 {
+        background-color: rgba(255, 255, 255, 1);
+        width: 366px;
+        height: 48px;
+        position: absolute;
+        left: 610px;
+        top: 540px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+      .e28_90 {
+        background-color: rgba(223.125, 93.71250182390213, 0, 1);
+        width: 132px;
+        height: 40px;
+        position: absolute;
+        left: 661px;
+        top: 639px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+      }
+      #e28_91 {
+        color: rgba(0, 0, 0, 1);
+        width: 101px;
+        height: 39px;
+        position: absolute;
+        left: 661px;
+        top: 640px;
+        font-family: Poppins;
+        text-align: right;
+        font-size: 18px;
+        letter-spacing: 8;
+      }
+      #e28_92 {
+        color: rgba(0, 0, 0, 1);
+        width: 134px;
+        height: 41px;
+        position: absolute;
+        left: 653px;
+        top: 347px;
+        font-family: Poppins;
+        text-align: left;
+        font-size: 48px;
+        letter-spacing: 0;
+      }
+    </style>
   </head>
   <body>
     <form action="/login" method="POST">
@@ -19,5 +234,43 @@
       <br /><br />
       <input type="submit" />
     </form>
+    <!-- <img src="./css/elogin_pass.png" alt="" class="bg" /> -->
+    <!-- <div id="e24_3">
+      <div id="e28_75"></div>
+      <div id="e28_76"></div>
+      <form action="/login" method="POST">
+        <span id="e28_86">username</span><span id="e28_87">password</span>
+
+        <div id="e28_77"></div>
+        <div id="e28_78"></div>
+        <div id="e28_79"></div>
+        <div id="e28_80"></div>
+        <span id="e28_81"
+          ><a href="/about" style="text-decoration: none; color: white"
+            >About</a
+          ></span
+        ><span id="e28_82">Login</span><span id="e28_83">Signup</span
+        ><span id="e28_84">Baat</span>
+        
+        <input
+          type="email"
+          id="e28_85"
+          name="email"
+          placeholder="Enter Email ID"
+          required
+        />
+        <br /><br />
+        <input
+          type="text"
+          name="password"
+          id="e28_89"
+          placeholder="Enter password"
+          required
+        />
+
+        <button type="submit" class="e28_90" id="e28_91">Submit</button>
+      </form>
+      <span id="e28_92">Login</span>
+    </div>  -->
   </body>
 </html>
