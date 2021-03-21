@@ -9,7 +9,7 @@ Events :- Organisations which are interested in counducting events can give info
 
 
 - *Design*<br />
-https://www.figma.com/file/izgrvGO77YhoMJqQYDEqIu/Baat?node-id=6%3A2
+Open in [Figma](https://www.figma.com/file/izgrvGO77YhoMJqQYDEqIu/Baat?node-id=6%3A2)
 
 - *YouTube*<br />
 https://www.youtube.com/watch?v=OtEFg4EKAEM
