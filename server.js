@@ -525,11 +525,12 @@ app.post("/teacherUpload", function (req, res) {
 
 // Teacher Upload Delete
 
-app.post("/teacherUploadDelete", function (req, res) {
-  var upload_id = req.body.upload_id;
-  var query = `delete from teacher_uploads where upload_id = ${upload_id}`;
-  con.query;
-});
+// TODO : Feature yet to be Implemented
+// app.post("/teacherUploadDelete", function (req, res) {
+//   var upload_id = req.body.upload_id;
+//   var query = `delete from teacher_uploads where upload_id = ${upload_id}`;
+//   con.query;
+// });
 
 const PORT = process.env.PORT || 3000
 
