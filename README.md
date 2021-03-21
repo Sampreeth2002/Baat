@@ -24,4 +24,11 @@ run *npm install* to install all the npm dependencies
 ```bash
  npm install
 ```
+
+run *npm run dev* to start server
+
+```bash
+ npm run dev
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
