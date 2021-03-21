@@ -16,3 +16,11 @@ https://www.youtube.com/watch?v=OtEFg4EKAEM
 
 *PPT*
 https://vitacin-my.sharepoint.com/:p:/g/personal/sampreethm_2019_vitstudent_ac_in/EVbeLguJep5Kr5LUsZEo6ekB2aUaQLLh6OCGKOnAfC630A?e=3D0qDv
+
+## Getting Started
+
+Change Directory into the Server and Client Folder and run npm install to install all the npm dependencies
+
+bash
+
+npm install
