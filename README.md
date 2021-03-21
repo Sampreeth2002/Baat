@@ -8,11 +8,9 @@ Events :- Organisations which are interested in counducting events can give info
 
 
 
-- *Design*<br />
-Open in [Figma](https://www.figma.com/file/izgrvGO77YhoMJqQYDEqIu/Baat?node-id=6%3A2)
+- *Design* : Open in [Figma](https://www.figma.com/file/izgrvGO77YhoMJqQYDEqIu/Baat?node-id=6%3A2)
 
-- *YouTube*<br />
-https://www.youtube.com/watch?v=OtEFg4EKAEM
+- *YouTube* : See [Demo Video](https://www.youtube.com/watch?v=OtEFg4EKAEM)
 
 - *PPT*<br />
 https://vitacin-my.sharepoint.com/:p:/g/personal/sampreethm_2019_vitstudent_ac_in/EVbeLguJep5Kr5LUsZEo6ekB2aUaQLLh6OCGKOnAfC630A?e=3D0qDv
