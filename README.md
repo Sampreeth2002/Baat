@@ -6,6 +6,8 @@ Teachers notes uploaded is directly converted to voice notes and student can eas
 
 Events :- Organisations which are interested in counducting events can give information in the platform . Students can get notifications about events and can go to respective event on time.
 
+
+
 *Design*
 https://www.figma.com/file/izgrvGO77YhoMJqQYDEqIu/Baat?node-id=6%3A2
 
