@@ -19,8 +19,8 @@ https://vitacin-my.sharepoint.com/:p:/g/personal/sampreethm_2019_vitstudent_ac_i
 
 ## Getting Started
 
-Change Directory into the Server and Client Folder and run npm install to install all the npm dependencies
+run *npm install* to install all the npm dependencies
 
-bash
-
-npm install
+```bash
+ npm install
+```
