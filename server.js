@@ -534,5 +534,5 @@ app.post("/teacherUploadDelete", function (req, res) {
 const PORT = process.env.PORT ?? 3001;
 
 server.listen(PORT, () => {
-  console.log("App listening on port 3000!");
+  console.log("App listening on port 3001!");
 });
